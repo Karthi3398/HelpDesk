@@ -12,6 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -56,8 +57,14 @@ class _SplashScreenState extends State<SplashScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Align(
-                      alignment:Alignment.centerLeft,
-                      child: Text('Login',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -161,19 +168,31 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundColor: Colors.blue[900],
         body: SingleChildScrollView(
             child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(Icons.live_help,size: 60,color: Colors.white,),
-                  SizedBox(height: 10,),
-                  Text('Grievance',style: TextStyle(color: Colors.white,fontSize: 25),),
-                  Text('Redress',style: TextStyle(color: Colors.white,fontSize: 25),)
-                ],
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.live_help,
+                size: 60,
+                color: Colors.white,
               ),
-            )),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Grievance',
+                style: TextStyle(color: Colors.white, fontSize: 25),
+              ),
+              Text(
+                'Redress',
+                style: TextStyle(color: Colors.white, fontSize: 25),
+              )
+            ],
+          ),
+        )),
       );
     }
   }
