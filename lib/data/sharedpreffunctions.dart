@@ -19,6 +19,8 @@ class HelpFunctions{
   static String sharedPrefIsAdmin = "ISADMIN";
   static String sharedPrefIsTenant = "ISTENANT";
   static String sharedPrefTenantId = "TENANTID";
+  static String deviceToken = "DEVICETOKEN";
+  static bool isSplashScreenShowing = false;
 
 
   static Future<void> saveIntoSharedPreference(String key,String val) async{

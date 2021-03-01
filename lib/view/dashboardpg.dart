@@ -1,12 +1,14 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:help_desk_app/api/apiurls.dart';
 import 'package:help_desk_app/data/sharedpreffunctions.dart';
+import 'package:help_desk_app/view/loginui.dart';
+import 'package:help_desk_app/view/qrcodepg.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
-import 'loginui.dart';
 import 'dart:convert';
 
 class DashboardPage extends StatefulWidget {
@@ -58,17 +60,26 @@ class _DashboardPageState extends State<DashboardPage> {
 
    fetchData() async {
     data = null;
+    String deviceId = await HelpFunctions.getStringSharedPref(HelpFunctions.deviceToken);
+    print('Device token detection');
+    print(deviceId);
     int idValue = await HelpFunctions.getIntSharedPref(HelpFunctions.sharedPrefUserId);
     String startDate = formatter.format(selectedFromDate);
     String endDate = formatter.format(selectedToDate);
     url = ApiUrls.BASEURL+ApiUrls.DASHBOARD+"?FromDate="+startDate+"&ToDate="+endDate+"&UserId="+idValue.toString();
-    var response = await http.get(url);
-    print(response.body);
-    var convertToJson = json.decode(response.body);
-    setState(() {
-      data = convertToJson['details'];
-    });
+    var result = await Connectivity().checkConnectivity();
+    if(result == ConnectivityResult.mobile || result == ConnectivityResult.wifi){
+      var response = await http.get(url);
+      print(response.body);
+      var convertToJson = json.decode(response.body);
+      setState(() {
+        data = convertToJson['details'];
+      });
+    }else{
+      Toast.show("No Internet Connection", context);
+    }
   }
+
 
   @override
   void initState() {
@@ -118,6 +129,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 onTap: () {
                   HelpFunctions.insertIntoSharedPreference(HelpFunctions.sharedPrefUserId, null);
                   Navigator.of(context).pop();
+                  HelpFunctions.isSplashScreenShowing = true;
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => HomePage()));
                 },
@@ -197,9 +209,18 @@ class _DashboardPageState extends State<DashboardPage> {
                                 padding: const EdgeInsets.all(10.0),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Color(int.parse("0xFF"+val.substring(1)))
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: Color(int.parse("0xFF"+val.substring(1))),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(0, 3), // changes position of shadow
+                                      ),
+                                    ],
                                   ),
+
                                   child: Center(
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment
@@ -226,6 +247,9 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
     floatingActionButton: FloatingActionButton(
+      onPressed: (){
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GrievancePage()));
+      },
       backgroundColor: Colors.red,
       child: Icon(Icons.add_rounded,color: Colors.white,),
     ),);

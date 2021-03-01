@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -18,6 +19,18 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     _passwordVisible = false;
     super.initState();
+    checkPermissions();
+
+  }
+
+  checkPermissions() async{
+    var cameraStatus = await Permission.camera.status;
+    var storageStatus = await Permission.storage.status;
+    if(!cameraStatus.isGranted && !storageStatus.isGranted){
+
+
+    }else{
+    }
   }
 
   @override
@@ -25,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return containerPg();
   }
 
-  Widget containerPg() {
+  Widget containerPg()  {
     if (isSplashCompleted) {
       return Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -158,6 +171,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
     } else {
+
       Future.delayed(Duration(milliseconds: 3000), () {
         setState(() {
           isSplashCompleted = true;

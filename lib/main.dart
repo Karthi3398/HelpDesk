@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:help_desk_app/view/loginui.dart';
-import 'package:help_desk_app/view/splashscreenpg.dart';
-
 void main() {
   runApp(MyApp());
 }
