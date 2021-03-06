@@ -7,6 +7,12 @@ class ApiUrls{
 
   static String DASHBOARD = 'RequesterTicketAPI/GetRequesterTicketDashBoardDetail';//get
 
+  static String COMPLAINTTYPE = 'ComplaintTypeAPI/GetComplaintTypeList'; //get
+
+  static String GETASSETID = 'RequesterTicketAPI/GetAssetMappingInfoByKey';//get
+
+  static String COMPLAINTSAPI = 'ComplaintAPI/GetComplaintList';
+
 
 
 }
